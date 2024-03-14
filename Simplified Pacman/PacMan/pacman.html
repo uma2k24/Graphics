@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+    <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+    <script type="text/javascript" src="../Common/initShaders.js"></script>
+    <script type="text/javascript" src="../Common/initShaders2.js"></script>
+    <script type="text/javascript" src="../Common/MV.js"></script>
+    <script src="game.js" defer></script>
+    <title>Simplified Pacman</title>
+
+    <script id = "vertexShaderSource" type="text">
+
+        #version 300 es
+        #pragma vscode_glsllint_stage: vert
+
+        in vec2 attrib_pos;
+        in vec3 attrib_color;
+        out vec3 vert_color;
+
+        uniform float ent_dim; //entity dimension
+
+        void main(){
+            vert_color = attrib_color;
+            gl_Position = vec4(attrib_pos, 0.0, 1.0);
+            gl_PointSize = ent_dim;
+        }
+    </script>
+    <script id="fragmentShaderSource" type="text">
+
+        #version 300 es
+        #pragma vscode_glsllint_stage: frag
+
+        precision lowp float; // low precision for fragment shader (https://webgl2fundamentals.org/webgl/lessons/webgl-precision-issues.html)
+
+        in vec3 vert_color;
+        out vec4 frag_color;
+
+        void main(){
+            frag_color = vec4(vert_color, 1.0);
+        }
+    </script>
+<body>
+	<div id="scoretimes">
+	<p id="time">60</p>
+    <p id="score">0</p>
+	</div>
+
+    <canvas id="gl-canvas", width="500", height="600"></canvas>
+    <p id="Instructions">
+        Instructions: <br>
+        Arrow Keys = Move <br>           
+        S = Start <br>
+        P = Pause <br>
+        R = Resume <br>
+        Shift + R = Restart
+        </p>
+    </div>
+</body>
+</html>
+
+<style>
+
+    #Instructions{
+        font-family: Arial, Helvetica, sans-serif;
+        width: 450px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+	#scoretimes {
+		display: flex;
+		width: 450px;
+		position: fixed;
+		padding: 10px;
+        justify-content: space-between;
+	}
+	
+	#scoretimes > p {
+        padding-top: 8px;
+		margin-top: 0px;
+		margin-bottom: 0px;
+	}
+
+    #time {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 32px;
+        color: white;
+		padding-left: 12px;
+    }
+
+    #score {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 32px;
+        color: white;
+		padding-right: 12px;
+        padding-top: 8px;
+    }
+</style>
